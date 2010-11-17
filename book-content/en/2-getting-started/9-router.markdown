@@ -2,3 +2,55 @@
 
 * This will become a table of contents (this text will be scraped).
 {:toc}
+
+All of your app's routing configuration can be found in
+<tt>config/routes.rb</tt> and are contained inside of a block:
+
+    Merb::Router.prepare do
+      match("/").to(:controller => 'whatever', :action => 'index')
+    end
+{:lang=ruby html_use_syntax=true}  
+
+## Matching routes
+The simplest route matches a path in the requested URl to a controller and action
+
+    match("/hotdogs").to(:controller => 'food', :action => 'index')
+{:lang=ruby html_use_syntax=true}
+
+The string inside the <tt>match</tt> method will will send any matching URLs to
+the controller and action specified in the <tt>to</tt> method. For example
+<tt>http://localhost/hotdogs</tt> will now be sent to the <tt>Food</tt> controller's
+<tt>index</tt> method.
+
+match can accept variable and optional parts of a URL:
+
+    match("/hotdogs/:mustard").to(:controller => 'whatever', :action => 'index')
+{:lang=ruby html_use_syntax=true}
+
+By adding **:mustard** the URL will now need another segment, such as <tt>http://localhost/hotdogs/yesplease</tt>.
+This will still be routed to the <tt>Food</tt> controller's <tt>index</tt> action, with the addition
+of the last segment (<tt>yesplease</tt>) being added to the <tt>params[]</tt> array.
+
+Note that <tt>http://localhost/hotdogs</tt> doesn't work anymore, it doesn't have enough URL segments.
+Instead of adding extra routes to handle getting a hotdog with or without a mustard parameter
+an optional segment can be used:
+
+    match("/hotdogs(/:mustard)").to(:controller => 'whatever', :action => 'index')
+{:lang=ruby html_use_syntax=true}
+
+By putting any part of a match in parenthesis it becomes optional. This works for both
+parameters that are passed into the params array (prefixes with a colon) and for plain
+segments.
+
+Optional segments can be nested:
+
+    match("/hotdogs(/:mustard(/:onions))").to(:controller => 'whatever', :action => 'index')
+{:lang=ruby html_use_syntax=true}
+
+This would catch such variations as:
+- http://localhost/hotdogs, <tt>params[:mustard]</tt> = nil, <tt>params[:onions]</tt> = nil
+- http://localhost/hotdogs/yes, <tt>params[:mustard]</tt> = "yes", <tt>params[:onions]</tt> = nil
+- http://localhost/hotdogs/yes/hold, <tt>params[:mustard]</tt> = "yes", <tt>params[:onions]</tt> = "hold"
+
+## To controllers and actions
+

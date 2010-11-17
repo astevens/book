@@ -15,7 +15,6 @@ frequently, **please consider helping improve the content of this book**.
 =--
 
 1. [Front Matter](/front-matter)
-  1. [Foreword By Yehuda Katz](/front-matter/foreword)
   1. [Preface by Matt Aimonetti](/front-matter/preface)
   1. [Contributors](/front-matter/contributors)
 1. [Introduction](/introduction)
