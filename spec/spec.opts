@@ -1,0 +1,2 @@
+spec/models/page_spec.rb
+spec/requests/pages_spec.rb

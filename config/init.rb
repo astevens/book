@@ -1,9 +1,5 @@
 # Go to http://wiki.merbivore.com/pages/init-rb
  
-# Specify a specific version of a dependency
-# dependency "RedCloth", "> 3.0"
-require Merb.root / "config" / "dependencies"
-
 #  use_orm :none
 use_test :rspec
 use_template_engine :erb
@@ -44,4 +40,7 @@ end
 Merb::BootLoader.after_app_loads do
   # This will get executed after your app's classes have been loaded.
   require 'maruku/ext/div'
+  
+  # This is needed until MRI gets a fix
+  require 'symbol_fix'
 end
