@@ -29,7 +29,7 @@ match can accept variable and optional parts of a URL:
 
 By adding **:mustard** the URL will now need another segment, such as <tt>http://localhost/hotdogs/yesplease</tt>.
 This will still be routed to the <tt>Food</tt> controller's <tt>index</tt> action, with the addition
-of the last segment (<tt>yesplease</tt>) being added to the <tt>params[]</tt> array.
+of the last segment (<tt>yesplease</tt>) being added to the <tt>params[]</tt> hash.
 
 Note that <tt>http://localhost/hotdogs</tt> doesn't work anymore, it doesn't have enough URL segments.
 Instead of adding extra routes to handle getting a hotdog with or without a mustard parameter
@@ -39,7 +39,7 @@ an optional segment can be used:
 {:lang=ruby html_use_syntax=true}
 
 By putting any part of a match in parenthesis it becomes optional. This works for both
-parameters that are passed into the params array (prefixes with a colon) and for plain
+parameters that are passed into the params hash (prefixes with a colon) and for plain
 segments.
 
 Optional segments can be nested:
@@ -52,5 +52,18 @@ This would catch such variations as:
 - http://localhost/hotdogs/yes, <tt>params[:mustard]</tt> = "yes", <tt>params[:onions]</tt> = nil
 - http://localhost/hotdogs/yes/hold, <tt>params[:mustard]</tt> = "yes", <tt>params[:onions]</tt> = "hold"
 
-## To controllers and actions
+TODO: add more about params using regexs
 
+## To controllers and actions
+the <tt>to</tt> method can do more than just decide what controller and action will be used.
+You can list any variable you like in the <tt>to</tt> clause and it will be sent as part of
+the <tt>params</tt> hash.
+
+    match("/hotdogs").to(:controller => 'food', :action => 'index', :pickles => 'never')
+{:lang=ruby html_use_syntax=true}
+Now you would have <tt>params[:pickles]</tt> ="never"
+
+TODO: add more about lambdas and other request modifications such as content-type
+
+## Resource routes
+    
